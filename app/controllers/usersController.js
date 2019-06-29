@@ -13,18 +13,22 @@ controller.signUp = async (req, res) => {
   if (!email || !username || !password) {
     return false;
   }
+  emailValidation = await User.findOne({email: email});
+  usernameValidation = await User.findOne({username: username});
 
-  const newUser = await new User({
-    email: email,
-    username: username,
-    password: password
-    
-  });
+  if (!usernameValidation && !emailValidation) {
+    const newUser = await new User({
+      email: email,
+      username: username,
+      password: password
+      
+    });
+    result = await newUser.save();
+  } else {
+    result = 'Username or E-mail Already Exist'
+  }
 
-  await newUser.save();
-
-
-  responser.send();
+  responser.send(result);
 };
 
 //getUsers
