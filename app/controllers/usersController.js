@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 //singUp
-controller.signup = async (req, res) => {
+controller.signUp = async (req, res) => {
   const responser = responserFor(res);
   const {email, username, password} = req.body;
 
@@ -28,7 +28,7 @@ controller.signup = async (req, res) => {
 };
 
 //getUsers
-controller.getUsers = async (req, res) => {
+controller.getAll = async (req, res) => {
   const responser = responserFor(res);
   const users = await User.find();
 
@@ -36,7 +36,7 @@ controller.getUsers = async (req, res) => {
 };
 
 //getUsersById
-controller.getUserById = async (req, res) => {
+controller.getById = async (req, res) => {
   const responser = responserFor(res);
   const id = req.params.id;
   const user = await User.findById(id);

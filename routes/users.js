@@ -5,14 +5,12 @@ const express = require('express'),
   // authenticate = require('../app/services/authentication');
 
 /* GET users listing. */
-router.get('/', wrapAsync(userController.getUsers));
+router.get('/', wrapAsync(userController.getAll));
 
-router.post('/signup', wrapAsync(userController.signup));
+router.put('/signUp', wrapAsync(userController.signUp));
 
 router.post('/login', wrapAsync(userController.login));
 
-router.get('/:id', wrapAsync(userController.getUserById));
-
-router.get('/current', wrapAsync(userController.getCurrent));
+router.get('/:id', wrapAsync(userController.getById));
 
 module.exports = router;
