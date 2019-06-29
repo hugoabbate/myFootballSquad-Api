@@ -25,7 +25,7 @@ controller.signUp = async (req, res) => {
     });
     result = await newUser.save();
   } else {
-    result = 'Username or E-mail Already Exist'
+    result = 'Username or E-mail Already Exist';
   }
 
   responser.send(result);

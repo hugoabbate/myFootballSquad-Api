@@ -12,7 +12,8 @@ const CourtSchema = new mongoose.Schema({
   courtName: {
     type: String,
     trim: true,
-    required: true
+    required: true,
+    unique: true
   },
   courtSize: [
     {type: Number}

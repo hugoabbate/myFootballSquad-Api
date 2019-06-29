@@ -13,18 +13,19 @@ controller.create = async ( req, res ) => {
     throw new NoDataError('Missing Argument');
   }
 
-  const newCourt = await new Court({
-    courtName: courtName,
-    courtSize: courtSize
-  });
+  const courtNameValidation = await Court.findOne({courtName: courtName});
+  
+  if (!courtNameValidation) {
+    const newCourt = await new Court({
+      courtName: courtName,
+      courtSize: courtSize
+    });
+    created = await newCourt.save();
+  } else {
+    created = 'CourtName Already Exist';
+  }
 
-  const created = await newCourt.save();
-
-  const createdControl = {
-    success: (created !== undefined)
-  };
-
-  responser.send(createdControl);
+  responser.send(created);
 };
 
 // getCourts
@@ -63,17 +64,22 @@ controller.update = async (req, res) => {
     throw new NoDataError('Missing Argument')
   }
 
-  const court = {
-    courtName,
-    $currentDate: {updated: true}
-  };
+  courtNameValidation = await Court.findOne({courtName: courtName});
+  
+  if (!courtNameValidation) {
+    throw new DataNotFound('DataNotFound')
+  } else {
+    const court = {
+      courtName,
+      $currentDate: {updated: true}
+    };
+    const updatedData = await Court.findOneAndUpdate(query, court);
 
-  const updatedData = await Court.findOneAndUpdate(query, court);
-
-  const updateControl = {
-    success: (updatedData !== undefined)
-  };
-
+    updateControl = {
+      success: (updatedData !== undefined)
+    };
+  
+  }
 
   responser.send(updateControl);
 };
@@ -86,6 +92,12 @@ controller.delete = async (req, res) => {
 
   if (!id) {
     throw new NoDataError('Missing Argument');
+  }
+
+  const courtValidation = await Court.findById({_id: id});
+
+  if (!courtValidation) {
+    throw new DataNotFound('DataNotFound')
   }
 
   const deleted = await Court.findOneAndDelete({_id: id});
