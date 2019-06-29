@@ -4,14 +4,14 @@ const express = require('express'),
   courtsController = require('../app/controllers/courtsController');
 
 
-router.post('/', wrapAsync(courtsController.create));
+router.put('/', wrapAsync(courtsController.create));
 
 router.get('/', wrapAsync(courtsController.getAll));
 
-router.get('/:id', wrapAsync(courtsController.getCourtById));
+router.get('/:id', wrapAsync(courtsController.byId));
 
-router.post('/:id', wrapAsync(courtsController.updateCourt));
+router.patch('/:id', wrapAsync(courtsController.update));
 
-router.delete('/:id', wrapAsync(courtsController.deleteCourt));
+router.delete('/:id', wrapAsync(courtsController.delete));
 
 module.exports = router;

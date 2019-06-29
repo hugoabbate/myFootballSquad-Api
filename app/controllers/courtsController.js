@@ -36,7 +36,7 @@ controller.getAll = async (req, res) => {
 };
 
 // getCourtById
-controller.getCourtById = async (req, res) => {
+controller.byId = async (req, res) => {
   const responser = responserFor(res);
   const id = req.params.id;
 
@@ -54,7 +54,7 @@ controller.getCourtById = async (req, res) => {
 };
 
 // updateCourt
-controller.updateCourt = async (req, res) => {
+controller.update = async (req, res) => {
   const responser = responserFor(res);
   const courtName = req.body.courtName;
   const query = { _id: req.params.id};
@@ -80,7 +80,7 @@ controller.updateCourt = async (req, res) => {
 
 // deleteCourtById}
 
-controller.deleteCourt = async (req, res) => {
+controller.delete = async (req, res) => {
   const responser = responserFor(res);
   const id = req.params.id;
 
