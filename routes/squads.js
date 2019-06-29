@@ -4,21 +4,21 @@ const express = require('express'),
   squadsController = require('../app/controllers/squadsController');
 
 
-router.post('/', wrapAsync(squadsController.create));
+router.put('/', wrapAsync(squadsController.create));
 
 router.get('/', wrapAsync(squadsController.getAll));
 
-router.get('/:id', wrapAsync(squadsController.getSquadById));
+router.get('/:id', wrapAsync(squadsController.getById));
 
-router.post('/:id', wrapAsync(squadsController.updateSquad));
+router.patch('/:id', wrapAsync(squadsController.update));
 
-router.get('/byuserid/:id', wrapAsync(squadsController.getSquadByUserId));
+router.get('/byUser/:id', wrapAsync(squadsController.byUserId));
 
-router.delete('/:id', wrapAsync(squadsController.deleteSquad));
+router.delete('/:id', wrapAsync(squadsController.delete));
 
-router.delete('/deleteUserInASquad/:id', wrapAsync(squadsController.deleteUserInASquads));
+router.delete('/userInSquad/:id', wrapAsync(squadsController.userInSquads));
 
-router.post('/addUserInASquad/:id', wrapAsync(squadsController.addUserInASquad));
+router.patch('/addUser/:id', wrapAsync(squadsController.addUser));
 
 
 module.exports = router;

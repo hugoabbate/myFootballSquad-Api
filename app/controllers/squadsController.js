@@ -36,7 +36,7 @@ controller.getAll = async (req, res) => {
 };
 
 // GetbyId
-controller.getSquadById = async (req, res) => {
+controller.getById = async (req, res) => {
   const responser = responserFor(res);
   const id = req.params.id;
   const password = req.body.password;
@@ -59,7 +59,7 @@ controller.getSquadById = async (req, res) => {
 };
 
 // Update
-controller.updateSquad = async (req, res) => {
+controller.update = async (req, res) => {
   const responser = responserFor(res);
 
   const { squadName, courtName } = req.body;
@@ -88,7 +88,7 @@ controller.updateSquad = async (req, res) => {
 };
 
 // GetByUserID
-controller.getSquadByUserId = async (req, res) => {
+controller.byUserId = async (req, res) => {
   const responser = responserFor(res);
 
   const id = req.params.id;
@@ -104,7 +104,7 @@ controller.getSquadByUserId = async (req, res) => {
 };
 
 // Delete
-controller.deleteSquad = async (req, res) => {
+controller.delete = async (req, res) => {
   const responser = responserFor(res);
   const id = req.params.id;
 
@@ -121,7 +121,7 @@ controller.deleteSquad = async (req, res) => {
 };
 
 // Delete UserInSquads
-controller.deleteUserInASquads = async (req, res) => {
+controller.userInSquads = async (req, res) => {
   const responser = responserFor(res);
   const id = req.params.id;
 
@@ -134,7 +134,7 @@ controller.deleteUserInASquads = async (req, res) => {
 };
 
 // Add an User into a Squad
-controller.addUserInASquad = async (req, res) => {
+controller.addUser = async (req, res) => {
   const responser = responserFor(res);
 
   const query = {
