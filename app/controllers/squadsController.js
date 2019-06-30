@@ -14,14 +14,20 @@ controller.create = async ( req, res ) => {
     throw new NoDataError('Missing Argument');
   }
 
-  const newSquad = await new Squad({
-    squadName: squadName,
-    password: password,
-    courtName: courtName,
-    users: users
-  });
+  const squadValidation = await Squad.findOne({squadName: squadName});
   
-  const created = await newSquad.save();
+  if (!squadValidation) {
+    const newSquad = await new Squad({
+      squadName: squadName,
+      password: password,
+      courtName: courtName,
+      users: users
+    });
+    
+    created = await newSquad.save();
+  } else {
+    created = 'SquadName already exist'
+  }
 
   responser.send(created);
 };
@@ -61,7 +67,7 @@ controller.getById = async (req, res) => {
 // Update
 controller.update = async (req, res) => {
   const responser = responserFor(res);
-
+  const query = {_id: req.params.id};
   const { squadName, courtName } = req.body;
 
   if(!squadName || !courtName) {
@@ -73,11 +79,7 @@ controller.update = async (req, res) => {
     courtName,
     $currentDate: {updated: true}
   };
-
-  const query = {
-    _id: req.params.id
-  };
-
+  
   const updatedData = await Squad.findOneAndUpdate(query, squad);
 
   const updateControl = {
