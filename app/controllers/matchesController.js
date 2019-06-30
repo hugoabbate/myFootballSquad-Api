@@ -33,17 +33,23 @@ controller.create = async (req, res) => {
     throw new NoDataError('Missing Argument');
   }
 
-  const newMatch = await new Match({
-    courtName: courtName,
-    courtSize: courtSize,
-    team: team,
-    matchDate: matchDate,
-    price: price
-  });
+  const matchValidation = await Match.findOne({$and:[{courtName: courtName}, {matchDate: matchDate}, {courtSize: courtSize}]});
+  
+  if (!matchValidation){
+    const newMatch = await new Match({
+      courtName: courtName,
+      courtSize: courtSize,
+      team: team,
+      matchDate: matchDate,
+      price: price
+    });
+  
+    created = await newMatch.save();
+  } else {
+    created = 'Cannot create a match, there is one created in the same date, courtsize, and courtName';
+  }
 
-  created = await newMatch.save();
-
-  responser.send();
+  responser.send(created);
 };
 
 // Get
@@ -145,6 +151,7 @@ controller.date = async (req, res) => {
 controller.updateById = async (req, res) => {
   const responser = responserFor(res);
   const {courtName, courtSize, team, matchDate, price} = req.body;
+  const query = {_id: req.params.id};
 
   if (!courtName || !courtSize || !team || !matchDate || !price) {
     throw new NoDataError('Missing Argument');
@@ -157,10 +164,6 @@ controller.updateById = async (req, res) => {
     matchDate,
     price,
     $currentDate: {updated: true}
-  };
-
-  const query = {
-    _id: req.params.id
   };
 
   const updatedData = await Match.findByIdAndUpdate(query, match);
