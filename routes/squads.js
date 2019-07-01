@@ -18,6 +18,8 @@ router.delete('/:id', wrapAsync(squadsController.delete));
 
 router.delete('/userInSquad/:id', wrapAsync(squadsController.userInSquads));
 
+router.delete('/:id/deleteUser', wrapAsync(squadsController.deleteUser));
+
 router.patch('/addUser/:id', wrapAsync(squadsController.addUser));
 
 

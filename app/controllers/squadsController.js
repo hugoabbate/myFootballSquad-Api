@@ -161,4 +161,32 @@ controller.addUser = async (req, res) => {
   responser.send(updateControl);
 };
 
+// Delete UserInOneSquad
+controller.deleteUser = async (req, res) => {
+  const responser = responserFor(res);
+  const id = req.params.id;
+  const user = req.body.user;
+  
+  if(!id || !user) {
+    throw new NoDataError('Missing Argument');
+  }
+
+  const squad = await Squad.findOne({_id: id})
+
+  const index = squad.users.indexOf(user);
+
+  if (index > -1){
+    squad.users.splice(index,1);
+    squad.save();
+    saved = 'Success'
+  } else {
+      saved = 'The user is not in the squad'
+  }
+
+  // const updated = await Squad.findOneAndUpdate(id, users);
+
+  
+  responser.send(saved);
+};
+
 module.exports = controller;
