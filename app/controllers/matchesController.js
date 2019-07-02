@@ -33,9 +33,9 @@ controller.create = async (req, res) => {
     throw new NoDataError('Missing Argument');
   }
 
-  const matchValidation = await Match.findOne({$and:[{courtName: courtName}, {matchDate: matchDate}, {courtSize: courtSize}]});
+  const matchValidation = await Match.findOne({$and: [ {courtName: courtName}, {matchDate: matchDate}, {courtSize: courtSize} ]});
   
-  if (!matchValidation){
+  if (!matchValidation) {
     const newMatch = await new Match({
       courtName: courtName,
       courtSize: courtSize,
@@ -283,7 +283,7 @@ controller.createRandomTeams = async (req, res) => {
   const teams = createTeams(match);
 
   if (!teams) {
-    resp = 'Not enough players'
+    resp = 'Not enough players';
   } else {
     let currentIndex = teams.teamA.length;
 

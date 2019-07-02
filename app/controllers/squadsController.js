@@ -26,7 +26,7 @@ controller.create = async ( req, res ) => {
     
     created = await newSquad.save();
   } else {
-    created = 'SquadName already exist'
+    created = 'SquadName already exist';
   }
 
   responser.send(created);
