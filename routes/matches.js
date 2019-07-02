@@ -25,5 +25,6 @@ router.delete('/:id', wrapAsync(matchesController.delete));
 
 router.delete('/', wrapAsync(matchesController.deleteByCourtAndDate));
 
+router.patch('/:id/pullUser', wrapAsync(matchesController.pullUserOfMatch));
 
 module.exports = router;

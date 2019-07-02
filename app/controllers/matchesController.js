@@ -300,4 +300,57 @@ controller.createRandomTeams = async (req, res) => {
   responser.send(resp);
 };
 
+// Pull User of a Match
+controller.pullUserOfMatch = async (req, res) => {
+  const responser = responserFor(res);
+  const query = req.params.id;
+  const user = req.body.user;
+
+  if(!query || !user) {
+    throw new NoDataError('Missing Argument');
+  }
+
+  const match = await Match.findOne({_id: query});
+  const squad = await Squad.findOne({_id: match.team._id});
+
+  if (!match || !squad) {
+    throw new DataNotFound('Data Not Found');
+  }
+  
+  const indexSquad = squad.users.indexOf(user);
+  const indexMatch = match.assistList.indexOf(user);
+  const indexPlayersA = match.playersA.indexOf(user);
+  const indexPlayersB = match.playersB.indexOf(user);
+  const indexSubA = match.subPlayersA.indexOf(user);
+  const indexSubB = match.subPlayersB.indexOf(user);
+
+  let saved = {};
+
+  if ( indexSquad > -1) {
+    if (indexMatch > -1) {
+      match.assistList.splice(indexMatch, 1);
+      if (indexPlayersA > -1) {
+        match.playersA.splice(indexPlayersA, 1);
+      }
+      if (indexPlayersB > -1) {
+        match.playersB.splice(indexPlayersB, 1);
+      }
+      if (indexSubA > -1) {
+        match.subPlayersA.splice(indexSubA, 1);
+      }
+      if (indexSubB > -1) {
+        match.subPlayersB.splice(indexSubB, 1);
+      }
+      match.save();
+      saved = 'Success';
+    } else {
+      saved = 'already is not on the assistance list';
+    }
+  } else {
+    saved = 'is not on the Squad';
+  }
+
+  responser.send(saved);
+};
+
 module.exports = controller;
