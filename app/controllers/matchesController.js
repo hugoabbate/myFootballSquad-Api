@@ -75,8 +75,7 @@ controller.getMatch = async (req, res) => {
     throw new NoDataError('MissingArgument');
   }
 
-  const match = await Match.findOne({_id: id}).populate({path: 'courtName', select: 'courtName'})
-    .populate({path: 'courtSize', select: 'courtSize'})
+  const match = await Match.findById(id).populate({path: 'courtName', select: 'courtName'})
     .populate({path: 'team', select: 'squadName'})
     .populate({path: 'assistList', select: 'username'})
     .populate({path: 'playersA', select: 'username'})
@@ -96,13 +95,14 @@ controller.squadId = async (req, res) => {
     throw new NoDataError('MissingArgument');
   }
 
-  const match = await Match.find({team: id}).populate({path: 'courtName', select: 'courtName'})
-    .populate({path: 'courtSize', select: 'courtSize'})
+  const match = await Match.find({ team: id }).populate({path: 'courtName', select: 'courtName'})
     .populate({path: 'team', select: 'squadName'})
+    .populate({path: 'assistList', select: 'username'})
     .populate({path: 'playersA', select: 'username'})
     .populate({path: 'playersB', select: 'username'})
     .populate({path: 'subPlayersA', select: 'username'})
     .populate({path: 'subPlayersB', select: 'username'});
+
 
   responser.send(match);
 };
@@ -117,17 +117,18 @@ controller.courtId = async (req, res) => {
   }
 
   const matches = await Match.find({courtName: id}).populate({path: 'courtName', select: 'courtName'})
-    .populate({path: 'courtSize', select: 'courtSize'})
     .populate({path: 'team', select: 'squadName'})
+    .populate({path: 'assistList', select: 'username'})
     .populate({path: 'playersA', select: 'username'})
     .populate({path: 'playersB', select: 'username'})
     .populate({path: 'subPlayersA', select: 'username'})
     .populate({path: 'subPlayersB', select: 'username'});
 
+
   responser.send(matches);
 };
 
-// GetMatchesByDay - Preguntar a Calvin
+// GetMatchesByDay
 controller.date = async (req, res) => {
   const responser = responserFor(res);
   const matchDate = req.body.matchDate;
@@ -138,11 +139,11 @@ controller.date = async (req, res) => {
 
   const matches = await Match.find({matchDate: matchDate}).populate({path: 'courtName', select: 'courtName'})
     .populate({path: 'team', select: 'squadName'})
+    .populate({path: 'assistList', select: 'username'})
     .populate({path: 'playersA', select: 'username'})
     .populate({path: 'playersB', select: 'username'})
     .populate({path: 'subPlayersA', select: 'username'})
     .populate({path: 'subPlayersB', select: 'username'});
-
 
   responser.send(matches);
 };

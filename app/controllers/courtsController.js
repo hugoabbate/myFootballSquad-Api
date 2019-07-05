@@ -20,6 +20,7 @@ controller.create = async ( req, res ) => {
       courtName: courtName,
       courtSize: courtSize
     });
+    
     created = await newCourt.save();
   } else {
     created = 'CourtName Already Exist';
@@ -64,7 +65,7 @@ controller.update = async (req, res) => {
     throw new NoDataError('Missing Argument')
   }
 
-  courtNameValidation = await Court.findOne({courtName: courtName});
+  courtNameValidation = await Court.findOne({_id: query});
   
   if (!courtNameValidation) {
     throw new DataNotFound('DataNotFound')
