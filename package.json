@@ -15,7 +15,7 @@
     "firebase": "^5.10.0",
     "firebase-admin": "^7.3.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.5.2",
+    "mongoose": "^5.7.5",
     "winston": "^3.2.1"
   },
   "devDependencies": {
